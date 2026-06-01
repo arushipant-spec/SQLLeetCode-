@@ -1,0 +1,111 @@
+//Excerise One
+
+SELECT product_id
+FROM Products
+WHERE low_fats = 'Y' and recyclable = 'Y'; 
+
+//Excerise Two - Find Customer referee_id
+
+SELECT name
+FROM Customer
+WHERE referee_id != 2 OR isnull(referee_id)
+
+//Excerise Three - 595.Big Countries 
+
+SELECT name
+    ,population
+    ,area
+FROM World
+WHERE area >= 3000000 OR population >= 25000000
+
+//Excerise Four - 1148.Article Views 
+
+SELECT DISTINCT author_id AS id
+    FROM Views
+WHERE author_id = Viewer_id
+ORDER BY author_id ASC ;
+
+//Excerise Five - 1683Invalid Tweets
+
+SELECT tweet_id
+FROM Tweets
+WHERE LENGTH(content) > 15
+
+// Excerise Six - 1378 Replace Employee ID with the Unique Identifier 
+
+SELECT EU.unique_id  unique_id 
+    , E.name
+FROM employees E
+LEFT JOIN employeeUNI EU
+    on E.id = EU.id
+
+// Excerise Seven - 1068. Product Sales Analysis
+
+ SELECT product_name 
+    ,year
+    ,price
+FROM Sales S 
+INNER JOIN Product P 
+    on S.product_id = P.product_id
+
+//Excerise 8 
+SELECT V.customer_id
+    , COUNT(*) count_no_trans
+FROM Visits V 
+LEFT JOIN TransactionS T 
+    ON V.visit_id = T.visit_id
+WHERE ISNULL(T.visit_id) 
+GROUP BY V.customer_id
+//Excerise 9 - Rising Temperature 
+    SELECT W.id
+    FROM Weather as W 
+    Inner JOIN 
+        (SELECT *
+        ,id + 1 as id_2
+        FROM Weather ) as W_2
+    ON W_2.id_2 = W.id
+    WHERE W.temperature > W_2.temperature 
+//^This solution doesn't work here becuase, if the input only has 
+ //2 Solutions then it doesn't work. Date logic has to be used here. 
+
+//Excerise 10 Average Time of Process per Machine 
+
+
+//Excerise 11 Employee Bonus 
+SELECT name 
+    ,bonus
+FROM Employee E
+LEFT JOIN Bonus B
+ON E.empId = B.empId
+WHERE isnull(bonus) OR bonus < 1000
+
+
+//Excerise 12 - Find Customer Referee 
+
+SELECT name
+FROM Customer
+WHERE referee_id != 2 OR isnull(referee_id)
+
+// 1280.Students and Examinsations
+WITH Base_tab AS 
+    (SELECT * 
+    FROM Students S 
+    CROSS JOIN Subjects Sub)
+SELECT b.student_id
+    ,b.student_name
+    ,b.subject_name
+    ,count(E.subject_name) as attended_exams
+FROM base_tab as b 
+LEFT JOIN Examinations as E 
+ON b.student_id = E.student_id 
+AND b.subject_name = E.subject_name
+GROUP BY student_id, student_name, b.subject_name
+ORDER BY student_id, subject_name ASC
+
+
+
+
+
+
+
+
